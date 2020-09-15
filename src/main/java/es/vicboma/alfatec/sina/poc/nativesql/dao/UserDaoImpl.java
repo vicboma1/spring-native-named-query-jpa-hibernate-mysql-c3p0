@@ -42,63 +42,92 @@ public class UserDaoImpl implements UserDao {
 
   @Override
 	public List<User> findAllCreateNativeQuery() {
-    return em.createNativeQuery("SELECT id, name, email FROM user ORDER BY email DESC", User.class)
+    return em.createNativeQuery(User.NATIVE_SELECT_FIND_ALL, User.class)
              .getResultList();
 }
 
   @Override
 	public User findOneByIdCreateNativeQuery(Long _id) {
-    final Query nativeQuery = em.createNativeQuery("SELECT id, name, email FROM user WHERE id = :_id_ LIMIT 1", User.class);
+    final Query nativeQuery = em.createNativeQuery(User.NATIVE_SELECT_FIND_BY_ID, User.class);
     nativeQuery.setParameter("_id_", _id);
     return (User) nativeQuery.getSingleResult();
   }
 
   @Override
 	public List<UserDetail> findAllDetailCreateNativeQuery() {
-    return em.createNativeQuery("SELECT id, CONCAT(name, '-', email) as concat From user", User.RESULT_SET_MAPPING_DETAIL)
+    return em.createNativeQuery(User.NATIVE_SELECT_FIND_ALL_DETAIL, User.RESULT_SET_MAPPING_DETAIL)
              .getResultList();
 	}	
 
   @Override
   public User findOneByIdNamedNativeQuery(Long id) {
-    final Query nativeQuery = em.createNamedQuery(User.SELECT_FIND_BY_ID);
+    final Query nativeQuery = em.createNamedQuery(User.NAMED_NATIVE_SELECT_FIND_BY_ID);
 		nativeQuery.setParameter(1, id);
 		return (User) nativeQuery.getSingleResult();
 	}
 
   @Override
   public List<UserDetail> findAllDetailNamedNativeQuery() {
-    return em.createNamedQuery(User.SELECT_FIND_ALL_DETAIL)
+    return em.createNamedQuery(User.NAMED_NATIVE_SELECT_FIND_ALL_DETAIL)
              .getResultList();
   }
 
   @Override
   public List<User> findAllNamedNativeQuery() {
-    return em.createNamedQuery(User.SELECT_FIND_ALL)
+    return em.createNamedQuery(User.NAMED_NATIVE_SELECT_FIND_ALL)
             .getResultList();
   }
 
   @Override
   public Long findCountUserCreateNativeQuery() {
-    return ((BigInteger) em.createNativeQuery("SELECT count(user.id) FROM user")
+    return ((BigInteger) em.createNativeQuery(User.NATIVE_COUNT)
                             .getSingleResult())
                             .longValue();
   }
 
   @Override
   public Long findCountUserNamedNativeQuery() {
-    return ((BigInteger)em.createNamedQuery(User.COUNT)
+    return ((BigInteger)em.createNamedQuery(User.NAMED_NATIVE_COUNT)
                            .getSingleResult())
                            .longValue();
   }
 
   @Transactional
   @Override
-  public void insert(Long _id, String _name, String _email) {
-    final Query query = em.createNativeQuery("INSERT INTO user (id, name, email) VALUES(?,?,?)");
-    query.setParameter(1, _id);
-    query.setParameter(2, _name);
-    query.setParameter(3, _email);
+  public void insert( String name, String email) {
+    final Query query = em.createNamedQuery(User.NAMED_NATIVE_INSERT);
+    query.setParameter(1, name);
+    query.setParameter(2, email);
     query.executeUpdate();
   }
+
+  @Transactional
+  @Override
+  public void update(Long id, String name) {
+    final Query query = em.createNamedQuery(User.NAMED_NATIVE_UPDATE);
+    query.setParameter(1, name);
+    query.setParameter(2, id);
+    query.executeUpdate();
+  }
+
+  @Transactional
+  @Override
+  public void delete(Long id) {
+    final Query query = em.createNamedQuery(User.NAMED_NATIVE_DELETE);
+    query.setParameter(1, id);
+    query.executeUpdate();
+  }
+
+  @Transactional
+  @Override
+  public int deleteAll() {
+    return em.createNamedQuery(User.NAMED_NATIVE_DELETE_ALL).executeUpdate();
+  }
+
+  @Transactional
+  @Override
+  public int truncate()  {
+    return em.createNamedQuery(User.NAMED_NATIVE_TRUNCATE).executeUpdate();
+	}
+
 }

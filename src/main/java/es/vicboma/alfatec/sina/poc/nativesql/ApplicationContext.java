@@ -97,6 +97,12 @@ public class ApplicationContext {
                 put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
                 put("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
                 put("hibernate.jdbc.lob.non_contextual_creation", true);
+                //Bulk process
+                put("hibernate.jdbc.batch_size", env.getRequiredProperty("hibernate.jdbc.batch_size"));
+                put("hibernate.order_inserts", env.getRequiredProperty("hibernate.order_inserts"));
+                put("hibernate.order_updates", env.getRequiredProperty("hibernate.order_updates"));
+                put("hibernate.jdbc.batch_versioned_data", env.getRequiredProperty("hibernate.jdbc.batch_versioned_data"));
+                put("hibernate.jdbc.default_batch_fetch_size", env.getRequiredProperty("hibernate.jdbc.default_batch_fetch_size"));
               }
             });
           }

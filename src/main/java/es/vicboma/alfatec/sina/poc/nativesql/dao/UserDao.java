@@ -62,13 +62,33 @@ public interface UserDao {
    */
   Long findCountUserNamedNativeQuery() ;
 
+  /**
+   *
+   * @param _name
+   * @param _email
+   */
+  void insert( String _name, String _email);
 
-    /**
-     *
-     * @param l
-     * @param name
-     * @param email
-     */
-  @Transactional
-  void insert(Long l, String name, String email);
+  /**
+   *
+   * @param id
+   * @param name
+   */
+  void update(Long id, String name);
+
+  /**
+   *
+   * @param id
+   */
+  void delete(Long id);
+
+  /**
+   *
+   */
+  int deleteAll() ;
+
+  /**
+   *
+   */
+  int truncate();
 }
