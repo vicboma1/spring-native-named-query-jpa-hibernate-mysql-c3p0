@@ -18,17 +18,13 @@ jobs:
       - uses: mirromutth/mysql-action@v1.1
         with:
           mysql version: 5.7
-          mysql database: test  
+          mysql database: namednativequeries  
           mysql root password: root
       - name: Verify mysql connection
         run: |
           while ! mysqladmin ping -h"127.0.0.1" -P"3306" --silent; do
             sleep 1
           done
-      - name: Execute DDL
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -u root -p root test -e "CREATE TABLE IF NOT EXISTS 'user' ('id' bigint(20) NOT NULL AUTO_INCREMENT,'email' varchar(255) NOT NULL,'name' varchar(255) NOT NULL, PRIMARY KEY ('id'), UNIQUE KEY 'UK_ob8kqyqqgmefl0aco34akdtpe' ('email') ENGINE=InnoDB AUTO_INCREMENT=2130114;"
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
