@@ -22,7 +22,7 @@ jobs:
         env:
           MYSQL_USER: user
           MYSQL_PASSWORD: password
-          MYSQL_DATABASE: namednativequeritest@localhost
+          MYSQL_DATABASE: namednativequeritest
           MYSQL_ROOT_PASSWORD: password
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries 10
 
@@ -40,7 +40,8 @@ jobs:
         run: |
           sudo /etc/init.d/mysql start
           mysql --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';"
-          mysql -u root -p password --database=namednativequeritest@localhost --execute="DROP DATABASE namednativequeritest@localhost; CREATE DATABASE namednativequeritest@localhost; use namednativequeritest@localhost; CREATE TABLE IF NOT EXISTS 'user' ('id' bigint(20) NOT NULL AUTO_INCREMENT,'email' varchar(255) NOT NULL,'name' varchar(255) NOT NULL, PRIMARY KEY ('id'), UNIQUE KEY 'UK_ob8kqyqqgmefl0aco34akdtpe' ('email') ENGINE=InnoDB AUTO_INCREMENT=2130114 DEFAULT CHARSET=latin1;" 
+          mysql -u root -p -e "create database namednativequeritest"
+          mysql -u root -p -e "CREATE TABLE IF NOT EXISTS 'user' ('id' bigint(20) NOT NULL AUTO_INCREMENT,'email' varchar(255) NOT NULL,'name' varchar(255) NOT NULL, PRIMARY KEY ('id'), UNIQUE KEY 'UK_ob8kqyqqgmefl0aco34akdtpe' ('email') ENGINE=InnoDB AUTO_INCREMENT=2130114 DEFAULT CHARSET=latin1;"
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
