@@ -20,7 +20,6 @@ jobs:
         ports:
           - 3306
         env:
-          MYSQL_USER: root
           MYSQL_PASSWORD: root
           MYSQL_DATABASE: namednativequeritest
           MYSQL_ROOT_PASSWORD: root
