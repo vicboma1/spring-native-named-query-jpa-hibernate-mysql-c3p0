@@ -32,12 +32,12 @@ public class UserDaoImpl implements UserDao {
 
   @PostConstruct
   public void postConstruct() {
-    logger.info("postConstruct");
+    logger.info("PostConstruct");
   }
 
   @PreDestroy
   public void preDestroy() {
-    logger.info("preDestroy");
+    logger.info("PreDestroy");
   }
 
   @Override

@@ -35,7 +35,7 @@ public class UserDaoTest {
 
   @Before
   public void before() {
-    final int size = 2000;
+    final int size = 100;
 
     if(userDao.findCountUserNamedNativeQuery() <= 0)
       insert(size);
